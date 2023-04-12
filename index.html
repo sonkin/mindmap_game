@@ -54,7 +54,7 @@
     }
     mindmapObject.style.transform = "scale("+scale+")";
     mindmapObject.addEventListener("load", function() {
-        setTimeout(()=>initGame(mindmapObject),1000);
+        setTimeout(()=>initGame(mindmapObject),300);
     });
     document.addEventListener('gesturestart', function (e) {
         e.preventDefault();
