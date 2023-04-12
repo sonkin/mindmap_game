@@ -120,7 +120,7 @@ function updateNodePosition(node) {
 }
 
 window.addEventListener("resize", () => {
-  flyingNode && updateNodePosition(flyingNode);
+  if (typeof flyingNode !== "undefined") updateNodePosition(flyingNode);
 });
 
 function flyTaskNodeToParentNode(node) {
