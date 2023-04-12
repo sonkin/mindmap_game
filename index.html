@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html site-mode="en" mode="production" lang="en">
+<head>
+    <link href="styles.css" rel='stylesheet' >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+</head>
+<body>
+    <div id="app" >
+        <div id="svg-object-container" class="svg-object-container">
+            <object data="springboot2.svg"
+            id="mindmap" type="image/svg+xml"></object>
+        </div>
+          
+        <div class="score" id="score">Score: 0</div>
+    </div>
+    <div class="intro" id="intro">In introduction mode, put your mouse over the nodes to see what's inside.<br>Remember it and start the game!</div>    
+    <div id="popover" class="popover">
+        <div class="popover-arrow"></div>
+        <div id="popover-content" class="popover-content">
+        </div>
+    </div>
+    <div id="fallNodesContainer" class="fallNodesContainer"></div>
+    <div id="goodJob" class="goodJob">
+        <div>MindMap is completely assembled now!</div>
+        <br/>
+        <div>Great job!</div>
+    </div>
+    <div id="registration">
+        <div>Register to play</div>
+        <br/>
+        <input id="fullName" placeholder="Enter your full name">
+        <input id="email" placeholder="Enter your @dxc email">
+        <button onclick="startGame()" class="letsstart">Lets start!</button>
+    </div>
+    <div id="startGame" class="goodJob startGame" onclick="register()">Start the Game!</div>
+</body>
+</html>
+<script>
+    const isMobile = window.orientation;
+    const studyMode = true; // mode to study MindMap in the beginning
+    const mindmapObject = document.getElementById("mindmap");
+    const mindmapWidth = 1070;
+    const mindmapHeight = 420;
+    let attempts = localStorage.getItem("attempts_Collections") || 0;
+
+    pageWidth = window.innerWidth-50;
+    scale = 1; // default scale
+    if (!isMobile) {
+        mindmapObject.width = mindmapWidth+"px";
+        mindmapObject.height = mindmapHeight+"px";
+        scale = pageWidth / mindmapWidth;
+        if (pageWidth > 1300 && scale > 1.2) scale = 1.2;
+    }
+    mindmapObject.style.transform = "scale("+scale+")";
+    mindmapObject.addEventListener("load", function() {
+        initGame(mindmapObject);
+    });
+    document.addEventListener('gesturestart', function (e) {
+        e.preventDefault();
+    });
+
+    function restoreRegistrationFromLocalStorage() {
+        const storedName = localStorage.getItem("name");
+        if (storedName) document.getElementById("fullName").value = storedName;
+        const storedEmail = localStorage.getItem("email");
+        if (storedEmail) document.getElementById("email").value = storedEmail;
+    }
+    restoreRegistrationFromLocalStorage();
+    document.getElementById("startGame").style.opacity = "1";
+    function startGame() {
+        fullName = document.getElementById("fullName").value;
+        email = document.getElementById("email").value;
+        if (fullName.length<3 || !fullName.includes(" ")) { alert("Please enter your full name"); return; }
+        if (!email.endsWith("@dxc.com")) { alert("Please enter valid DXC email"); return; }
+        localStorage.setItem("name", fullName);
+        localStorage.setItem("email", email);
+        attempts++;
+        localStorage.setItem("attempts_Collections", attempts);
+
+        document.getElementById("registration").style.display = "none";
+        document.getElementById("intro").style.display = "none";
+        document.getElementById("score").style.display = "block";
+        openedMindMapNodes = {};
+        document.getElementById("startGame").style.display = "none";
+        setTimeout( ()=> { 
+            createTaskNodes(taskNodes);
+            fallNodesContainerInitAnimation();
+        }, 500);
+        setTimeout( ()=> { flyNodeToMiddle() }, 3000);
+    }
+
+    function register() {
+        document.getElementById("startGame").style.display = "none";
+        const appRect = document.getElementById("app").getBoundingClientRect();
+        const registration = document.getElementById("registration");
+        registration.style.display = "flex";
+        registration.style.opacity = "1";
+        registration.style.top = scale*appRect.height/2 + "px";
+        document.getElementById("fullName").focus();
+    }
+
+</script>
+<script src="mindmap2.js"></script>
+<script src="MindmapGame.js"></script>
+<script src="nodes_fly.js"></script>
