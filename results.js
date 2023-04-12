@@ -22,7 +22,7 @@ function renderTable(data) {
         row.insertCell().innerHTML = item.score;
         row.insertCell().innerHTML = item.nodesOrdered;
         row.insertCell().innerHTML = item.attempts;
-        row.insertCell().innerHTML = item.progress;
+        row.insertCell().innerHTML = item.progress+"%";
     });
 }
 
