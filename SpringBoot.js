@@ -50,14 +50,11 @@ const allMindMapNodes = {
     "Configures Spring based on dependencies in pom.xml"
 ],
 "Spring Boot Starters":[
-    "Bundles with several dependencies",
+    "Bundle several dependencies which are usually used together",
 ],
 "spring-boot-starter-parent":[
     "Defines dependency management for all possible dependencies",
     "Defines versions for all possible dependencies",
-],
-"@EnableAutoConfiguration":[
-   "Configures Spring based on dependencies in pom.xml",
 ],
 "application.properties":[
    "Can be placed to any folder in the classpath",

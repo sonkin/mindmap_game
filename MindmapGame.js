@@ -1,4 +1,5 @@
-const serverUri = "https://jquiz-athjd4btb4c0fadd.z01.azurefd.net/100/";
+const quizId = 101;
+const serverUri = `https://jquiz-athjd4btb4c0fadd.z01.azurefd.net/${quizId}/`;
 // const serverUri = "http://localhost:9000/100/";
 let nodesOrdered = 0;
 
@@ -31,7 +32,7 @@ function assignHandlers() {
   Object.entries(allMindMapNodes).forEach(([nodeName, subnodes]) => {
     const node = findNodeByName(nodeName);
     node.onclick = function() {
-      if (completelyAssembledMindMap) return;
+      if (typeof taskNode === "undefined" || completelyAssembledMindMap) return;
       if (subnodes.indexOf(taskNode.textContent)>=0) {
         correct(node, nodeName);
       } else {
@@ -49,6 +50,8 @@ function assignHandlers() {
       if (isMobile) return;
 
       showPopover(node, nodeName);
+      // after 2 sec delay, show all subnodes
+      popoverTimeout2 = setTimeout(()=>showPopover(node, nodeName, true), 3000);
     };
           
     node.addEventListener("mouseup", ()=> {
@@ -61,7 +64,10 @@ function assignHandlers() {
     node.onmouseleave = function() {
       if (typeof popoverTimeout !== "undefined") {
         clearTimeout(popoverTimeout);
-      } 
+      }
+      if (typeof popoverTimeout2 !== "undefined") {
+        clearTimeout(popoverTimeout2);
+      }
       let shape = node.querySelector('path[data-name="topic-shape"]');
       shape.setAttribute("fill","white");
       node.querySelector('tspan').style.fill=node.getAttribute("oldColor");
@@ -70,8 +76,10 @@ function assignHandlers() {
     };
   });
 }
+// timeouts to show popover quickly and slowly after delay
+let popoverTimeout, popoverTimeout2;
 
-function showPopover(node, nodeName) {
+function showPopover(node, nodeName, showUnopened = false) {
   // show popover 
   const popover = document.getElementById("popover");
 
@@ -79,7 +87,8 @@ function showPopover(node, nodeName) {
   // Set the popover border color
   popover.style.setProperty('--popover-border-color', shapeStrokeColor);
 
-  const nodeSubNodes = openedMindMapNodes[nodeName];
+  let nodeSubNodes = openedMindMapNodes[nodeName];
+  if (showUnopened) nodeSubNodes = allMindMapNodes[nodeName];
   const popoverContents = document.getElementById("popover-content");
 
   // if nothing to show, exit
@@ -114,11 +123,12 @@ function showPopover(node, nodeName) {
 
     let popoverLeft = posX;
     let popoverTop = posY;
+    const popoverShift = 5; // popover shift from the window edge
 
     if (parseInt(popoverRect.right) > viewportWidth) {
-      popoverLeft = posX - (popoverRect.right - viewportWidth);
+      popoverLeft = posX - (popoverRect.right - viewportWidth) - popoverShift;
     } else if (popoverRect.left < 0) {
-      popoverLeft = posX - popoverRect.left;
+      popoverLeft = posX - popoverRect.left + popoverShift;
     }
 
     // Update the popover position
@@ -139,7 +149,7 @@ async function sendScoreToServer() {
     headers: {
       "Content-Type": "application/json",
       // "Access-Control-Allow-Origin": "http://http://127.0.0.1:5500",
-      "Access-Control-Allow-Origin": "https://jmindmap.vercel.app/",
+      //"Access-Control-Allow-Origin": "https://jmindmap.vercel.app/",
     },
     body: JSON.stringify({name:fullName, email, score, nodesOrdered, attempts, progress:Math.round(100*nodesOrdered/totalNodes)}),
   });
@@ -168,6 +178,11 @@ function correct(node, nodeName) {
   plusOneDiv.innerHTML = `<span>+1</span>`;
   document.getElementById("svg-object-container").appendChild(plusOneDiv);
   plusOneDiv.classList.add('plus-minus-fly');
+
+  // plus-one need to fly right, but how far?
+  const howFarToFlyRight = parseInt(100 * window.innerWidth
+      / parseInt(getComputedStyle(plusOneDiv).width));
+  plusOneDiv.style.setProperty("--minus-plus-translate", howFarToFlyRight+"%");
 
   addSubnodeToPopover(node, nodeName);
   nodesOrdered++;
@@ -208,8 +223,13 @@ function incorrect() {
   const minusOneDiv = document.createElement("div");
   minusOneDiv.className = "minus-one";
   minusOneDiv.innerHTML = `<span>-1</span>`;
+
   document.getElementById("svg-object-container").appendChild(minusOneDiv);
   minusOneDiv.classList.add('plus-minus-fly');
+  // minus-one need to fly right, but how far?
+  const howFarToFlyRight = parseInt(100 * window.innerWidth
+      / parseInt(getComputedStyle(minusOneDiv).width));
+  minusOneDiv.style.setProperty("--minus-plus-translate", howFarToFlyRight+"%");
 
   // remove the div element after the animation is finished
   setTimeout(() => {

@@ -1,6 +1,6 @@
 let completelyAssembledMindMap = false;
  // this is a scale for taskNode set in flyNodeToMiddle()
-let taskNodeFlyingUpScale = pageWidth/500;
+let taskNodeFlyingUpScale = pageWidth/600;
 
 function createTaskNodes(nodes) {
   taskNodes.forEach((node, index) => {
@@ -96,9 +96,10 @@ function getFlyingNodeEndPosition(node, currentFlyingNodeScale) {
   const nodeRect = node.getBoundingClientRect();
 
   const shiftFromWindowBottom = 20;
+  const shiftFromMindMap = 30; //  TODO: place taskNode in the middle
   const endPosition = {
     x: window.innerWidth / 2 - nodeRect.width / currentFlyingNodeScale / 2,
-    y: appRect.bottom + nodeRect.height * taskNodeFlyingUpScale / 2,
+    y: appRect.bottom + nodeRect.height * taskNodeFlyingUpScale / 2 + shiftFromMindMap,
   };
   // if flyingNode is under the visible part of the screen, make it upper
   if (

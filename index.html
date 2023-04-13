@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html site-mode="en" mode="production" lang="en">
+<html lang="en">
 <head>
     <link href="styles.css" rel='stylesheet' >
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta charset="UTF-8">
     <title>MindMap Game</title>
 </head>
 <body>
     <div id="app" >
         <div id="svg-object-container" class="svg-object-container">
-            <object data="springboot2.svg"
+            <object data="SpringRest.svg"
             id="mindmap" type="image/svg+xml"></object>
+<!--            <object data="springboot2.svg"-->
+<!--            <object data="JavaCollections.svg"-->
         </div>
           
         <div class="score" id="score">Score: 0</div>
@@ -40,22 +43,39 @@
     const isMobile = window.orientation;
     const studyMode = true; // mode to study MindMap in the beginning
     const mindmapObject = document.getElementById("mindmap");
-    const mindmapWidth = 1070;
-    const mindmapHeight = 420;
-    let attempts = localStorage.getItem("attempts_Collections") || 0;
-
     pageWidth = window.innerWidth-50;
-    scale = 1; // default scale
-    if (!isMobile) {
-        mindmapObject.width = mindmapWidth+"px";
-        mindmapObject.height = mindmapHeight+"px";
-        scale = pageWidth / mindmapWidth;
-        if (pageWidth > 1300 && scale > 1.2) scale = 1.2;
+    attempts = localStorage.getItem("attempts_Collections") || 0;
+    if (window.innerWidth>1000) {
+        mindmapObject.width = "1000px";
+        //mindmapObject.height = "px";
     }
-    mindmapObject.style.transform = "scale("+scale+")";
+
     mindmapObject.addEventListener("load", function() {
         setTimeout(()=>initGame(mindmapObject),300);
+
+        svgDocument = mindmapObject.contentDocument;
+        const svgRoot = svgDocument.documentElement;
+        const svgRect = svgRoot.getBoundingClientRect();
+
+        // svgRoot.setAttribute("viewBox", `0 0 800 400`);
+        // svgRoot.childNodes[0].setAttribute("transform",
+        // `translate(${80} ${250})`)
+
+        // const mindmapWidth = svgRoot.viewBox.baseVal.width;
+        // const mindmapHeight = svgRoot.viewBox.baseVal.height;
+        //debugger
+        // if the screen is too large limit size of MindMap
+
+        scale = 1; // default scale
+        if (!isMobile) {
+            //scale = pageWidth / svgRect.width;
+            //console.log(scale)
+            //if (pageWidth > 1300 && scale > 1.2) scale = 1.2;
+        }
+        //mindmapObject.style.transform = "scale("+scale+")";
     });
+
+    // prevent zoom in, especially on mobile devices
     document.addEventListener('gesturestart', function (e) {
         e.preventDefault();
     });
@@ -101,6 +121,8 @@
     }
 
 </script>
-<script src="mindmap2.js"></script>
+<script src="SpringRest.js"></script>
+<!--<script src="SpringBoot.js"></script>-->
+<!--<script src="mindmap.js"></script>-->
 <script src="MindmapGame.js"></script>
 <script src="nodes_fly.js"></script>

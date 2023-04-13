@@ -1,0 +1,14 @@
+Contains @Bean methods - could you add some additional context?
+
+We have two configurations, and I don't see annotation one
+
+Can be replaced by YAML configuration - why application.properties is incorrect?
+
+Defines dependency management for all possible dependencies - I don't get a question
+
+POM - incorrect, DI - incorrect
+
+Can be placed to any folder in the classpath - why application.properties, but not properties configurations?
+What about yaml?
+
+And can be used instead of application.properties

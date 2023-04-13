@@ -15,6 +15,7 @@ body {
       display: flex;  
       justify-content: center;
       align-items: flex-start;
+      padding: 10px;
     }
 
   .taskCaption {
@@ -168,7 +169,7 @@ body {
   
   @keyframes minus-fly {
     100% {
-      transform: translate(3000%, -50%);
+      transform: translate(var(--minus-plus-translate, 3000%), -50%);
       opacity: 1;
     }
   }
@@ -316,7 +317,7 @@ body {
     text-align: center;
     font-family: 'NeverMind', 'Microsoft YaHei', 'PingFang SC', 'Microsoft JhengHei', sans-serif;
     font-weight: bold;
-    font-size: 30px;
+    font-size: 24px;
     background-color: rgb(153, 0, 255);
     color: white;
     border-radius: 30px;
