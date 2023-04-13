@@ -44,7 +44,7 @@
     const studyMode = true; // mode to study MindMap in the beginning
     const mindmapObject = document.getElementById("mindmap");
     pageWidth = window.innerWidth-50;
-    attempts = localStorage.getItem("attempts_Collections") || 0;
+    attempts = localStorage.getItem("attempts_SpringREST") || 0;
     if (window.innerWidth>1000) {
         mindmapObject.width = "1000px";
         //mindmapObject.height = "px";
@@ -96,7 +96,7 @@
         localStorage.setItem("name", fullName);
         localStorage.setItem("email", email);
         attempts++;
-        localStorage.setItem("attempts_Collections", attempts);
+        localStorage.setItem("attempts_SpringREST", attempts);
 
         document.getElementById("registration").style.display = "none";
         document.getElementById("intro").style.display = "none";
