@@ -51,6 +51,5 @@ const allMindMapNodes = {
     ]
 }
 
-
 let openedMindMapNodes = allMindMapNodes;
 let taskNodes = Object.entries(allMindMapNodes).flatMap(n=>n[1]);

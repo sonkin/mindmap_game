@@ -46,7 +46,8 @@ Spring Boot MindMap
     - Includes dependency management for all possible dependencies
     - Defines versions of all dependencies
 - Actuator
-    - Provides production-ready features for monitoring and managing - - Spring Boot applications
-    - Exposes various endpoints for gathering information and metrics
-    - Customizable and extensible
+    - Provides production-ready features for monitoring and managing
+- Spring Boot applications
+  - Exposes various endpoints for gathering information and metrics
+  - Customizable and extensible
 

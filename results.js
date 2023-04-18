@@ -1,4 +1,4 @@
-const API_URL = "https://jquiz-athjd4btb4c0fadd.z01.azurefd.net/101/users";
+const API_URL = "https://jquiz-athjd4btb4c0fadd.z01.azurefd.net/100/users";
 const reloadBtn = document.getElementById("reload");
 const quizDataTable = document.getElementById("quizDataTable");
 const tbody = quizDataTable.getElementsByTagName("tbody")[0];
