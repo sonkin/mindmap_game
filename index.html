@@ -45,8 +45,9 @@
     const mindmapObject = document.getElementById("mindmap");
     pageWidth = window.innerWidth-50;
     attempts = localStorage.getItem("attempts_SpringREST") || 0;
-    if (window.innerWidth>1000) {
-        mindmapObject.width = "1000px";
+    // set the maximal size - if bigger, do not zoom
+    if (window.innerWidth>1200) {
+        mindmapObject.width = "1200px";
         //mindmapObject.height = "px";
     }
 

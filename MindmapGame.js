@@ -2,6 +2,7 @@ const quizId = 100;
 const serverUri = `https://jquiz-athjd4btb4c0fadd.z01.azurefd.net/${quizId}/`;
 // const serverUri = "http://localhost:9000/100/";
 let nodesOrdered = 0;
+const educationMode = false; // education mode: after 2 sec delay, show all sub-nodes
 
 function initGame(mindmapObject) {
   svgDocument = mindmapObject.contentDocument;
@@ -50,8 +51,11 @@ function assignHandlers() {
       if (isMobile) return;
 
       showPopover(node, nodeName);
-      // after 2 sec delay, show all subnodes
-      popoverTimeout2 = setTimeout(()=>showPopover(node, nodeName, true), 3000);
+
+      // education mode: after 2 sec delay, show all subnodes
+      if (educationMode) {
+        popoverTimeout2 = setTimeout(()=>showPopover(node, nodeName, true), 3000);
+      }
     };
           
     node.addEventListener("mouseup", ()=> {

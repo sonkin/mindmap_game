@@ -42,7 +42,6 @@ const allMindMapNodes = {
        "Holds elements prior to processing",
        "Used for multi-threaded processing",
        "Strict FIFO order",
-       "Enqueue (add) and dequeue (remove) operations",
        "Useful for scheduling tasks"
     ],
     "Deque":[
