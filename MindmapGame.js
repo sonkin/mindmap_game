@@ -1,5 +1,5 @@
 const quizId = 1000;
-const serverUri = `https://jquiz-athjd4btb4c0fadd.z01.azurefd.net/${quizId}/`;
+const serverUri = `https://jtutor.app/${quizId}/`;
 // const serverUri = "http://localhost:9000/100/";
 let nodesOrdered = 0;
 const educationMode = false; // education mode: after 2 sec delay, show all sub-nodes

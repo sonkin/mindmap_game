@@ -11,7 +11,7 @@
         <div id="svg-object-container" class="svg-object-container">
 <!--            <object data="SpringRest.svg"-->
             <object data="JavaCollections.svg"
-            id="mindmap" type="image/svg+xml"></object>
+                id="mindmap" type="image/svg+xml"></object>
 <!--            <object data="springboot2.svg"-->
         </div>
           
@@ -39,12 +39,15 @@
     <div id="startGame" class="goodJob startGame" onclick="register()">Start the Game!</div>
 </body>
 </html>
+<script src="MindmapGame.js"></script>
+
 <script>
     const isMobile = window.orientation;
     const studyMode = true; // mode to study MindMap in the beginning
     const mindmapObject = document.getElementById("mindmap");
+    const localStorageAttempsKey = `attempts_${quizId}`;
     pageWidth = window.innerWidth-50;
-    attempts = localStorage.getItem("attempts_SpringREST") || 0;
+    attempts = localStorage.getItem(localStorageAttempsKey) || 0;
     // set the maximal size - if bigger, do not zoom
     if (window.innerWidth>1200) {
         mindmapObject.width = "1200px";
@@ -97,7 +100,7 @@
         localStorage.setItem("name", fullName);
         localStorage.setItem("email", email);
         attempts++;
-        localStorage.setItem("attempts_SpringREST", attempts);
+        localStorage.setItem(localStorageAttempsKey, attempts);
 
         document.getElementById("registration").style.display = "none";
         document.getElementById("intro").style.display = "none";
@@ -125,5 +128,4 @@
 <!--<script src="SpringRest.js"></script>-->
 <!--<script src="SpringBoot.js"></script>-->
 <script src="mindmap.js"></script>
-<script src="MindmapGame.js"></script>
 <script src="nodes_fly.js"></script>
